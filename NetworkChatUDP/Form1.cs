@@ -198,9 +198,11 @@ namespace NetworkChatUDP
 
         public void AddOutput(string str)
         {
-            StringBuilder sb = new StringBuilder(txtOutput.Text);
-            sb.AppendLine(str);
-            txtOutput.Text = sb.ToString();
+            //StringBuilder sb = new StringBuilder(txtOutput.Text);
+            //sb.AppendLine(str);
+            //txtOutput.Text = sb.ToString();
+            txtOutput.AppendText(str);
+            txtOutput.AppendText("\r\n");
         }
 
         public static string GetLocalIPAddress()
@@ -357,7 +359,9 @@ namespace NetworkChatUDP
                 // Connect the socket to the remote endpoint. Catch any errors.
                 try
                 {
-                    //sender.ReceiveTimeout = 30 * 1000;  // 30 secs
+                    sender.ReceiveTimeout = 30 * 1000;  // 30 secs
+                    sender.ReceiveTimeout = 30 * 1000;  // 30 secs
+                    sender.ReceiveTimeout = 30 * 1000;  // 30 secs
                     sender.SendTimeout = 30 * 1000;  // 30 secs
                     sender.Connect(remoteEP);
 
@@ -457,8 +461,8 @@ namespace NetworkChatUDP
                 // Connect the socket to the remote endpoint. Catch any errors.
                 try
                 {
-                    //sender.ReceiveTimeout = 30 * 1000;  // 30 secs
-                    sender.SendTimeout = 30 * 1000;  // 30 secs
+                    sender.ReceiveTimeout = 15 * 1000;  // in milliseconds
+                    sender.SendTimeout = 15 * 1000;  // in milliseconds
                     sender.Connect(remoteEP);
 
                     //Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
@@ -501,7 +505,7 @@ namespace NetworkChatUDP
                     byte[] bytes = new byte[1500];
                     /// stalls everything if a response isnt received
                     int bytesRec = sender.Receive(bytes);
-
+                    
                     ////int bytesRec = 0;
                     ////SocketAsyncEventArgs socketArgs = new SocketAsyncEventArgs();
                     ////socketArgs.SetBuffer(bytes, 0, bytes.Length);
@@ -566,6 +570,34 @@ namespace NetworkChatUDP
         private void cmdSendWaitUE_Click(object sender, EventArgs e)
         {
             this.StartClientWaitUE();
+        }
+
+        private void txtMessage_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.cmdSendWaitUE_Click(sender, e);
+            }
+        }
+
+        private void cmdKick_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = "rcon testpass kick dkryzen";
+        }
+
+        private void cmdMap_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = "rcon testpass map turnpike";
+        }
+
+        private void cmdReload_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = "rcon testpass reload";
+        }
+
+        private void cmdSlap_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = "rcon testpass slap dkryzen 2";
         }
     }
 }
