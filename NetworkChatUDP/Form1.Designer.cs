@@ -70,6 +70,7 @@
             this.txtRconPassword = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txtPlayerTarget = new System.Windows.Forms.TextBox();
+            this.cmdGravity = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtYourIP
@@ -527,11 +528,24 @@
             this.txtPlayerTarget.TabIndex = 50;
             this.txtPlayerTarget.Text = "dkryzen";
             // 
+            // cmdGravity
+            // 
+            this.cmdGravity.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdGravity.Location = new System.Drawing.Point(199, 497);
+            this.cmdGravity.Margin = new System.Windows.Forms.Padding(2);
+            this.cmdGravity.Name = "cmdGravity";
+            this.cmdGravity.Size = new System.Drawing.Size(82, 31);
+            this.cmdGravity.TabIndex = 51;
+            this.cmdGravity.Text = "gravity";
+            this.cmdGravity.UseVisualStyleBackColor = true;
+            this.cmdGravity.Click += new System.EventHandler(this.cmdGravity_Click);
+            // 
             // NetworkChatUDP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(577, 657);
+            this.Controls.Add(this.cmdGravity);
             this.Controls.Add(this.txtPlayerTarget);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
@@ -628,6 +642,7 @@
         private System.Windows.Forms.TextBox txtRconPassword;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtPlayerTarget;
+        private System.Windows.Forms.Button cmdGravity;
     }
 }
 

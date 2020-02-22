@@ -623,5 +623,10 @@ namespace NetworkChatUDP
         {
             txtMessage.Text = string.Format("rcon {0} waverespawn 0", txtRconPassword.Text);
         }
+
+        private void cmdGravity_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} gravity 500", txtRconPassword.Text);
+        }
     }
 }
