@@ -203,6 +203,10 @@ namespace NetworkChatUDP
             //txtOutput.Text = sb.ToString();
             txtOutput.AppendText(str);
             txtOutput.AppendText("\r\n");
+            txtOutput.AppendText("\r\n");
+            txtOutput.AppendText("\r\n");
+            txtOutput.AppendText("\r\n");
+            txtOutput.AppendText("\r\n");
         }
 
         public static string GetLocalIPAddress()
@@ -582,22 +586,42 @@ namespace NetworkChatUDP
 
         private void cmdKick_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = "rcon testpass kick dkryzen";
+            txtMessage.Text = string.Format("rcon {0} kick {1}", txtRconPassword.Text, txtPlayerTarget.Text);
         }
 
         private void cmdMap_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = "rcon testpass map turnpike";
+            txtMessage.Text = string.Format("rcon {0} map turnpike", txtRconPassword.Text);
         }
 
         private void cmdReload_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = "rcon testpass reload";
+            txtMessage.Text = string.Format("rcon {0} reload", txtRconPassword.Text);
         }
 
         private void cmdSlap_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = "rcon testpass slap dkryzen 2";
+            txtMessage.Text = string.Format("rcon {0} slap {1} 2", txtRconPassword.Text, txtPlayerTarget.Text);
+        }
+
+        private void cmdFriendlyFire_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} friendlyfire 0", txtRconPassword.Text);
+        }
+
+        private void cmdTimelimit_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} timelimit 20", txtRconPassword.Text);
+        }
+
+        private void cmdSwapteams_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} swapteams", txtRconPassword.Text);
+        }
+
+        private void cmdWaverespawn_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} waverespawn 0", txtRconPassword.Text);
         }
     }
 }
