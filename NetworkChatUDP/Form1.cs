@@ -203,10 +203,6 @@ namespace NetworkChatUDP
             //txtOutput.Text = sb.ToString();
             txtOutput.AppendText(str);
             txtOutput.AppendText("\r\n");
-            txtOutput.AppendText("\r\n");
-            txtOutput.AppendText("\r\n");
-            txtOutput.AppendText("\r\n");
-            txtOutput.AppendText("\r\n");
         }
 
         public static string GetLocalIPAddress()
