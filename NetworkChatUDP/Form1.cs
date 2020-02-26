@@ -198,9 +198,6 @@ namespace NetworkChatUDP
 
         public void AddOutput(string str)
         {
-            //StringBuilder sb = new StringBuilder(txtOutput.Text);
-            //sb.AppendLine(str);
-            //txtOutput.Text = sb.ToString();
             txtOutput.AppendText(str);
             txtOutput.AppendText("\r\n");
         }
@@ -607,7 +604,7 @@ namespace NetworkChatUDP
 
         private void cmdTimelimit_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} timelimit 20", txtRconPassword.Text);
+            txtMessage.Text = string.Format("rcon {0} timelimit 22", txtRconPassword.Text);
         }
 
         private void cmdSwapteams_Click(object sender, EventArgs e)
@@ -617,12 +614,27 @@ namespace NetworkChatUDP
 
         private void cmdWaverespawn_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} waverespawn 0", txtRconPassword.Text);
+            txtMessage.Text = string.Format("rcon {0} waverespawn 1", txtRconPassword.Text);
         }
 
         private void cmdGravity_Click(object sender, EventArgs e)
         {
             txtMessage.Text = string.Format("rcon {0} gravity 500", txtRconPassword.Text);
+        }
+
+        private void cmdSuddenDeath_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} suddendeath 1", txtRconPassword.Text);
+        }
+
+        private void cmdStatus_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("status");
+        }
+
+        private void cmdNuke_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} nuke {1}", txtRconPassword.Text, txtPlayerTarget.Text);
         }
     }
 }
