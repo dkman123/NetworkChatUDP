@@ -661,5 +661,10 @@ namespace NetworkChatUDP
         {
             txtMessage.Text = string.Format("rcon {0} smite {1}", txtRconPassword.Text, txtPlayerTarget.Text);
         }
+
+        private void cmdPlayerList_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = "playerlist";
+        }
     }
 }

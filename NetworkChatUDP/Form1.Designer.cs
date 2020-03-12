@@ -68,6 +68,7 @@
             this.cmdStartListening = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtListeningPort = new System.Windows.Forms.TextBox();
+            this.cmdPlayerList = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtYourIP
@@ -481,11 +482,23 @@
             this.txtListeningPort.Text = "7070";
             this.txtListeningPort.Visible = false;
             // 
+            // cmdPlayerList
+            // 
+            this.cmdPlayerList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdPlayerList.Location = new System.Drawing.Point(724, 826);
+            this.cmdPlayerList.Name = "cmdPlayerList";
+            this.cmdPlayerList.Size = new System.Drawing.Size(123, 48);
+            this.cmdPlayerList.TabIndex = 65;
+            this.cmdPlayerList.Text = "playerlist";
+            this.cmdPlayerList.UseVisualStyleBackColor = true;
+            this.cmdPlayerList.Click += new System.EventHandler(this.cmdPlayerList_Click);
+            // 
             // NetworkChatUDP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(866, 1011);
+            this.Controls.Add(this.cmdPlayerList);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtListeningPort);
             this.Controls.Add(this.cmdStopListening);
@@ -578,6 +591,7 @@
         private System.Windows.Forms.Button cmdStartListening;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtListeningPort;
+        private System.Windows.Forms.Button cmdPlayerList;
     }
 }
 
