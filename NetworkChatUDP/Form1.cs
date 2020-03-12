@@ -636,5 +636,30 @@ namespace NetworkChatUDP
         {
             txtMessage.Text = string.Format("rcon {0} nuke {1}", txtRconPassword.Text, txtPlayerTarget.Text);
         }
+
+        private void cmdMute_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} mute {1} 60", txtRconPassword.Text, txtPlayerTarget.Text);
+        }
+
+        private void cmdBan_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} ban {1}", txtRconPassword.Text, txtPlayerTarget.Text);
+        }
+
+        private void cmdTempban_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} tempban {1} 20m", txtRconPassword.Text, txtPlayerTarget.Text);
+        }
+
+        private void cmdUnban_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} unban {1}", txtRconPassword.Text, txtPlayerTarget.Text);
+        }
+
+        private void cmdSmite_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("rcon {0} smite {1}", txtRconPassword.Text, txtPlayerTarget.Text);
+        }
     }
 }

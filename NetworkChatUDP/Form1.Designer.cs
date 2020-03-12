@@ -30,34 +30,18 @@
         {
             this.txtYourIP = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.cmdStartListening = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtListeningPort = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtServerIP = new System.Windows.Forms.TextBox();
-            this.cmdSendOnly = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtServerPort = new System.Windows.Forms.TextBox();
-            this.cmdStopListening = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.cmdClear = new System.Windows.Forms.Button();
             this.cmdFillUrT = new System.Windows.Forms.Button();
-            this.cmdFillSG15Plyr = new System.Windows.Forms.Button();
-            this.cmdFillSG16Plyr = new System.Windows.Forms.Button();
-            this.cmdSG16Info = new System.Windows.Forms.Button();
-            this.cmdSG15Info = new System.Windows.Forms.Button();
-            this.cmdUE4HS = new System.Windows.Forms.Button();
-            this.cbxEnteredHex = new System.Windows.Forms.CheckBox();
-            this.cmdUE4c = new System.Windows.Forms.Button();
-            this.cmdSendWait = new System.Windows.Forms.Button();
             this.cmdSendWaitUE = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.cmdKick = new System.Windows.Forms.Button();
             this.cmdMap = new System.Windows.Forms.Button();
             this.cmdReload = new System.Windows.Forms.Button();
@@ -74,6 +58,16 @@
             this.cmdNuke = new System.Windows.Forms.Button();
             this.cmdSuddenDeath = new System.Windows.Forms.Button();
             this.cmdStatus = new System.Windows.Forms.Button();
+            this.cmdMute = new System.Windows.Forms.Button();
+            this.cmdBan = new System.Windows.Forms.Button();
+            this.cmdTempban = new System.Windows.Forms.Button();
+            this.cmdUnban = new System.Windows.Forms.Button();
+            this.cmdSmite = new System.Windows.Forms.Button();
+            this.cbxEnteredHex = new System.Windows.Forms.CheckBox();
+            this.cmdStopListening = new System.Windows.Forms.Button();
+            this.cmdStartListening = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtListeningPort = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtYourIP
@@ -94,38 +88,6 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Your IP";
             // 
-            // cmdStartListening
-            // 
-            this.cmdStartListening.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.cmdStartListening.Location = new System.Drawing.Point(462, 65);
-            this.cmdStartListening.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.cmdStartListening.Name = "cmdStartListening";
-            this.cmdStartListening.Size = new System.Drawing.Size(129, 42);
-            this.cmdStartListening.TabIndex = 2;
-            this.cmdStartListening.Text = "Start Listening";
-            this.cmdStartListening.UseVisualStyleBackColor = true;
-            this.cmdStartListening.Click += new System.EventHandler(this.cmdStartListening_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label2.Location = new System.Drawing.Point(14, 65);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(106, 20);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Listening Port";
-            // 
-            // txtListeningPort
-            // 
-            this.txtListeningPort.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.txtListeningPort.Location = new System.Drawing.Point(128, 66);
-            this.txtListeningPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.txtListeningPort.Name = "txtListeningPort";
-            this.txtListeningPort.Size = new System.Drawing.Size(146, 26);
-            this.txtListeningPort.TabIndex = 1;
-            this.txtListeningPort.Text = "7070";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -143,18 +105,6 @@
             this.txtServerIP.Size = new System.Drawing.Size(146, 26);
             this.txtServerIP.TabIndex = 5;
             this.txtServerIP.Text = "127.0.0.1";
-            // 
-            // cmdSendOnly
-            // 
-            this.cmdSendOnly.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.cmdSendOnly.Location = new System.Drawing.Point(464, 935);
-            this.cmdSendOnly.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.cmdSendOnly.Name = "cmdSendOnly";
-            this.cmdSendOnly.Size = new System.Drawing.Size(98, 58);
-            this.cmdSendOnly.TabIndex = 8;
-            this.cmdSendOnly.Text = "Send Only";
-            this.cmdSendOnly.UseVisualStyleBackColor = true;
-            this.cmdSendOnly.Click += new System.EventHandler(this.cmdSendOnly_Click);
             // 
             // label4
             // 
@@ -192,32 +142,10 @@
             this.txtServerPort.TabIndex = 6;
             this.txtServerPort.Text = "7070";
             // 
-            // cmdStopListening
-            // 
-            this.cmdStopListening.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.cmdStopListening.Location = new System.Drawing.Point(610, 65);
-            this.cmdStopListening.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.cmdStopListening.Name = "cmdStopListening";
-            this.cmdStopListening.Size = new System.Drawing.Size(129, 42);
-            this.cmdStopListening.TabIndex = 3;
-            this.cmdStopListening.Text = "Stop Listening";
-            this.cmdStopListening.UseVisualStyleBackColor = true;
-            this.cmdStopListening.Click += new System.EventHandler(this.cmdStopListening_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label6.Location = new System.Drawing.Point(486, 865);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(326, 20);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Send message ~ or EXIT to stop the listener.";
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(21, 865);
+            this.label7.Location = new System.Drawing.Point(108, 951);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(243, 20);
             this.label7.TabIndex = 16;
@@ -234,19 +162,19 @@
             // 
             // txtOutput
             // 
-            this.txtOutput.Location = new System.Drawing.Point(16, 125);
+            this.txtOutput.Location = new System.Drawing.Point(16, 67);
             this.txtOutput.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtOutput.Size = new System.Drawing.Size(832, 459);
+            this.txtOutput.Size = new System.Drawing.Size(832, 517);
             this.txtOutput.TabIndex = 22;
             this.txtOutput.WordWrap = false;
             // 
             // cmdClear
             // 
             this.cmdClear.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmdClear.Location = new System.Drawing.Point(788, 65);
+            this.cmdClear.Location = new System.Drawing.Point(786, 15);
             this.cmdClear.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cmdClear.Name = "cmdClear";
             this.cmdClear.Size = new System.Drawing.Size(64, 42);
@@ -258,7 +186,7 @@
             // cmdFillUrT
             // 
             this.cmdFillUrT.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.cmdFillUrT.Location = new System.Drawing.Point(18, 889);
+            this.cmdFillUrT.Location = new System.Drawing.Point(20, 942);
             this.cmdFillUrT.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cmdFillUrT.Name = "cmdFillUrT";
             this.cmdFillUrT.Size = new System.Drawing.Size(82, 38);
@@ -266,101 +194,6 @@
             this.cmdFillUrT.Text = "Fill UrT";
             this.cmdFillUrT.UseVisualStyleBackColor = true;
             this.cmdFillUrT.Click += new System.EventHandler(this.cmdFillUrT_Click);
-            // 
-            // cmdFillSG15Plyr
-            // 
-            this.cmdFillSG15Plyr.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.cmdFillSG15Plyr.Location = new System.Drawing.Point(122, 889);
-            this.cmdFillSG15Plyr.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.cmdFillSG15Plyr.Name = "cmdFillSG15Plyr";
-            this.cmdFillSG15Plyr.Size = new System.Drawing.Size(129, 38);
-            this.cmdFillSG15Plyr.TabIndex = 24;
-            this.cmdFillSG15Plyr.Text = "Fill SG 15 Plyr";
-            this.cmdFillSG15Plyr.UseVisualStyleBackColor = true;
-            this.cmdFillSG15Plyr.Click += new System.EventHandler(this.cmdFillSG15Plyr_Click);
-            // 
-            // cmdFillSG16Plyr
-            // 
-            this.cmdFillSG16Plyr.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.cmdFillSG16Plyr.Location = new System.Drawing.Point(272, 889);
-            this.cmdFillSG16Plyr.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.cmdFillSG16Plyr.Name = "cmdFillSG16Plyr";
-            this.cmdFillSG16Plyr.Size = new System.Drawing.Size(128, 38);
-            this.cmdFillSG16Plyr.TabIndex = 25;
-            this.cmdFillSG16Plyr.Text = "Fill SG 16 Plyr";
-            this.cmdFillSG16Plyr.UseVisualStyleBackColor = true;
-            this.cmdFillSG16Plyr.Click += new System.EventHandler(this.cmdFillSG16Plyr_Click);
-            // 
-            // cmdSG16Info
-            // 
-            this.cmdSG16Info.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.cmdSG16Info.Location = new System.Drawing.Point(570, 889);
-            this.cmdSG16Info.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.cmdSG16Info.Name = "cmdSG16Info";
-            this.cmdSG16Info.Size = new System.Drawing.Size(128, 38);
-            this.cmdSG16Info.TabIndex = 27;
-            this.cmdSG16Info.Text = "Fill SG 16 Info";
-            this.cmdSG16Info.UseVisualStyleBackColor = true;
-            this.cmdSG16Info.Click += new System.EventHandler(this.cmdSG16Info_Click);
-            // 
-            // cmdSG15Info
-            // 
-            this.cmdSG15Info.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.cmdSG15Info.Location = new System.Drawing.Point(422, 889);
-            this.cmdSG15Info.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.cmdSG15Info.Name = "cmdSG15Info";
-            this.cmdSG15Info.Size = new System.Drawing.Size(129, 38);
-            this.cmdSG15Info.TabIndex = 26;
-            this.cmdSG15Info.Text = "Fill SG 15 Info";
-            this.cmdSG15Info.UseVisualStyleBackColor = true;
-            this.cmdSG15Info.Click += new System.EventHandler(this.cmdSG15Info_Click);
-            // 
-            // cmdUE4HS
-            // 
-            this.cmdUE4HS.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmdUE4HS.Location = new System.Drawing.Point(16, 955);
-            this.cmdUE4HS.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.cmdUE4HS.Name = "cmdUE4HS";
-            this.cmdUE4HS.Size = new System.Drawing.Size(104, 38);
-            this.cmdUE4HS.TabIndex = 31;
-            this.cmdUE4HS.Text = "Fill UE4 HS";
-            this.cmdUE4HS.UseVisualStyleBackColor = true;
-            this.cmdUE4HS.Click += new System.EventHandler(this.cmdUE4HS_Click);
-            // 
-            // cbxEnteredHex
-            // 
-            this.cbxEnteredHex.AutoSize = true;
-            this.cbxEnteredHex.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.cbxEnteredHex.Location = new System.Drawing.Point(724, 897);
-            this.cbxEnteredHex.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.cbxEnteredHex.Name = "cbxEnteredHex";
-            this.cbxEnteredHex.Size = new System.Drawing.Size(124, 24);
-            this.cbxEnteredHex.TabIndex = 32;
-            this.cbxEnteredHex.Text = "Entered Hex";
-            this.cbxEnteredHex.UseVisualStyleBackColor = true;
-            // 
-            // cmdUE4c
-            // 
-            this.cmdUE4c.Location = new System.Drawing.Point(150, 955);
-            this.cmdUE4c.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.cmdUE4c.Name = "cmdUE4c";
-            this.cmdUE4c.Size = new System.Drawing.Size(92, 38);
-            this.cmdUE4c.TabIndex = 34;
-            this.cmdUE4c.Text = "Fill UE4 C";
-            this.cmdUE4c.UseVisualStyleBackColor = true;
-            this.cmdUE4c.Click += new System.EventHandler(this.cmdUE4c_Click);
-            // 
-            // cmdSendWait
-            // 
-            this.cmdSendWait.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.cmdSendWait.Location = new System.Drawing.Point(752, 935);
-            this.cmdSendWait.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.cmdSendWait.Name = "cmdSendWait";
-            this.cmdSendWait.Size = new System.Drawing.Size(98, 58);
-            this.cmdSendWait.TabIndex = 35;
-            this.cmdSendWait.Text = "Send && Wait";
-            this.cmdSendWait.UseVisualStyleBackColor = true;
-            this.cmdSendWait.Click += new System.EventHandler(this.cmdSendWait_Click);
             // 
             // cmdSendWaitUE
             // 
@@ -372,26 +205,6 @@
             this.cmdSendWaitUE.Text = "Send && Wait UE";
             this.cmdSendWaitUE.UseVisualStyleBackColor = true;
             this.cmdSendWaitUE.Click += new System.EventHandler(this.cmdSendWaitUE_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label9.Location = new System.Drawing.Point(650, 935);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(97, 20);
-            this.label9.TabIndex = 37;
-            this.label9.Text = "For anything";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label10.Location = new System.Drawing.Point(644, 965);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(109, 20);
-            this.label10.TabIndex = 38;
-            this.label10.Text = "other than UE";
             // 
             // cmdKick
             // 
@@ -419,7 +232,7 @@
             this.cmdReload.Name = "cmdReload";
             this.cmdReload.Size = new System.Drawing.Size(123, 48);
             this.cmdReload.TabIndex = 41;
-            this.cmdReload.Text = "reload";
+            this.cmdReload.Text = "reload map";
             this.cmdReload.UseVisualStyleBackColor = true;
             this.cmdReload.Click += new System.EventHandler(this.cmdReload_Click);
             // 
@@ -555,11 +368,134 @@
             this.cmdStatus.UseVisualStyleBackColor = true;
             this.cmdStatus.Click += new System.EventHandler(this.cmdStatus_Click);
             // 
+            // cmdMute
+            // 
+            this.cmdMute.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdMute.Location = new System.Drawing.Point(20, 826);
+            this.cmdMute.Name = "cmdMute";
+            this.cmdMute.Size = new System.Drawing.Size(123, 48);
+            this.cmdMute.TabIndex = 55;
+            this.cmdMute.Text = "mute";
+            this.cmdMute.UseVisualStyleBackColor = true;
+            this.cmdMute.Click += new System.EventHandler(this.cmdMute_Click);
+            // 
+            // cmdBan
+            // 
+            this.cmdBan.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdBan.Location = new System.Drawing.Point(160, 826);
+            this.cmdBan.Name = "cmdBan";
+            this.cmdBan.Size = new System.Drawing.Size(123, 48);
+            this.cmdBan.TabIndex = 56;
+            this.cmdBan.Text = "ban";
+            this.cmdBan.UseVisualStyleBackColor = true;
+            this.cmdBan.Click += new System.EventHandler(this.cmdBan_Click);
+            // 
+            // cmdTempban
+            // 
+            this.cmdTempban.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdTempban.Location = new System.Drawing.Point(298, 826);
+            this.cmdTempban.Name = "cmdTempban";
+            this.cmdTempban.Size = new System.Drawing.Size(123, 48);
+            this.cmdTempban.TabIndex = 57;
+            this.cmdTempban.Text = "tempban";
+            this.cmdTempban.UseVisualStyleBackColor = true;
+            this.cmdTempban.Click += new System.EventHandler(this.cmdTempban_Click);
+            // 
+            // cmdUnban
+            // 
+            this.cmdUnban.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdUnban.Location = new System.Drawing.Point(442, 826);
+            this.cmdUnban.Name = "cmdUnban";
+            this.cmdUnban.Size = new System.Drawing.Size(123, 48);
+            this.cmdUnban.TabIndex = 58;
+            this.cmdUnban.Text = "unban";
+            this.cmdUnban.UseVisualStyleBackColor = true;
+            this.cmdUnban.Click += new System.EventHandler(this.cmdUnban_Click);
+            // 
+            // cmdSmite
+            // 
+            this.cmdSmite.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdSmite.Location = new System.Drawing.Point(585, 826);
+            this.cmdSmite.Name = "cmdSmite";
+            this.cmdSmite.Size = new System.Drawing.Size(123, 48);
+            this.cmdSmite.TabIndex = 59;
+            this.cmdSmite.Text = "smite";
+            this.cmdSmite.UseVisualStyleBackColor = true;
+            this.cmdSmite.Click += new System.EventHandler(this.cmdSmite_Click);
+            // 
+            // cbxEnteredHex
+            // 
+            this.cbxEnteredHex.AutoSize = true;
+            this.cbxEnteredHex.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.cbxEnteredHex.Location = new System.Drawing.Point(376, 950);
+            this.cbxEnteredHex.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.cbxEnteredHex.Name = "cbxEnteredHex";
+            this.cbxEnteredHex.Size = new System.Drawing.Size(124, 24);
+            this.cbxEnteredHex.TabIndex = 60;
+            this.cbxEnteredHex.Text = "Entered Hex";
+            this.cbxEnteredHex.UseVisualStyleBackColor = true;
+            // 
+            // cmdStopListening
+            // 
+            this.cmdStopListening.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.cmdStopListening.Location = new System.Drawing.Point(724, 949);
+            this.cmdStopListening.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.cmdStopListening.Name = "cmdStopListening";
+            this.cmdStopListening.Size = new System.Drawing.Size(123, 42);
+            this.cmdStopListening.TabIndex = 62;
+            this.cmdStopListening.Text = "Stop Listening";
+            this.cmdStopListening.UseVisualStyleBackColor = true;
+            this.cmdStopListening.Visible = false;
+            // 
+            // cmdStartListening
+            // 
+            this.cmdStartListening.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.cmdStartListening.Location = new System.Drawing.Point(588, 949);
+            this.cmdStartListening.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.cmdStartListening.Name = "cmdStartListening";
+            this.cmdStartListening.Size = new System.Drawing.Size(120, 42);
+            this.cmdStartListening.TabIndex = 61;
+            this.cmdStartListening.Text = "Start Listening";
+            this.cmdStartListening.UseVisualStyleBackColor = true;
+            this.cmdStartListening.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label2.Location = new System.Drawing.Point(584, 918);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(106, 20);
+            this.label2.TabIndex = 64;
+            this.label2.Text = "Listening Port";
+            this.label2.Visible = false;
+            // 
+            // txtListeningPort
+            // 
+            this.txtListeningPort.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.txtListeningPort.Location = new System.Drawing.Point(724, 915);
+            this.txtListeningPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.txtListeningPort.Name = "txtListeningPort";
+            this.txtListeningPort.Size = new System.Drawing.Size(123, 26);
+            this.txtListeningPort.TabIndex = 63;
+            this.txtListeningPort.Text = "7070";
+            this.txtListeningPort.Visible = false;
+            // 
             // NetworkChatUDP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(866, 1011);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtListeningPort);
+            this.Controls.Add(this.cmdStopListening);
+            this.Controls.Add(this.cmdStartListening);
+            this.Controls.Add(this.cbxEnteredHex);
+            this.Controls.Add(this.cmdSmite);
+            this.Controls.Add(this.cmdUnban);
+            this.Controls.Add(this.cmdTempban);
+            this.Controls.Add(this.cmdBan);
+            this.Controls.Add(this.cmdMute);
             this.Controls.Add(this.cmdStatus);
             this.Controls.Add(this.cmdSuddenDeath);
             this.Controls.Add(this.cmdNuke);
@@ -576,34 +512,18 @@
             this.Controls.Add(this.cmdReload);
             this.Controls.Add(this.cmdMap);
             this.Controls.Add(this.cmdKick);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
             this.Controls.Add(this.cmdSendWaitUE);
-            this.Controls.Add(this.cmdSendWait);
-            this.Controls.Add(this.cmdUE4c);
-            this.Controls.Add(this.cbxEnteredHex);
-            this.Controls.Add(this.cmdUE4HS);
-            this.Controls.Add(this.cmdSG16Info);
-            this.Controls.Add(this.cmdSG15Info);
-            this.Controls.Add(this.cmdFillSG16Plyr);
-            this.Controls.Add(this.cmdFillSG15Plyr);
             this.Controls.Add(this.cmdFillUrT);
             this.Controls.Add(this.cmdClear);
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.cmdStopListening);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtServerPort);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtMessage);
-            this.Controls.Add(this.cmdSendOnly);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtServerIP);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.txtListeningPort);
-            this.Controls.Add(this.cmdStartListening);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtYourIP);
             this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
@@ -620,34 +540,18 @@
 
         private System.Windows.Forms.TextBox txtYourIP;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button cmdStartListening;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtListeningPort;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtServerIP;
-        private System.Windows.Forms.Button cmdSendOnly;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtServerPort;
-        private System.Windows.Forms.Button cmdStopListening;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtOutput;
         private System.Windows.Forms.Button cmdClear;
         private System.Windows.Forms.Button cmdFillUrT;
-        private System.Windows.Forms.Button cmdFillSG15Plyr;
-        private System.Windows.Forms.Button cmdFillSG16Plyr;
-        private System.Windows.Forms.Button cmdSG16Info;
-        private System.Windows.Forms.Button cmdSG15Info;
-        private System.Windows.Forms.Button cmdUE4HS;
-        private System.Windows.Forms.CheckBox cbxEnteredHex;
-        private System.Windows.Forms.Button cmdUE4c;
-        private System.Windows.Forms.Button cmdSendWait;
         private System.Windows.Forms.Button cmdSendWaitUE;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button cmdKick;
         private System.Windows.Forms.Button cmdMap;
         private System.Windows.Forms.Button cmdReload;
@@ -664,6 +568,16 @@
         private System.Windows.Forms.Button cmdNuke;
         private System.Windows.Forms.Button cmdSuddenDeath;
         private System.Windows.Forms.Button cmdStatus;
+        private System.Windows.Forms.Button cmdMute;
+        private System.Windows.Forms.Button cmdBan;
+        private System.Windows.Forms.Button cmdTempban;
+        private System.Windows.Forms.Button cmdUnban;
+        private System.Windows.Forms.Button cmdSmite;
+        private System.Windows.Forms.CheckBox cbxEnteredHex;
+        private System.Windows.Forms.Button cmdStopListening;
+        private System.Windows.Forms.Button cmdStartListening;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtListeningPort;
     }
 }
 
