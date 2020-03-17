@@ -500,7 +500,7 @@ namespace NetworkChatUDP
 
                     //// try receiving on the same port
                     byte[] bytes = new byte[1500];
-                    /// stalls everything if a response isnt received
+                    /// stalls everything if a response isn't received
                     int bytesRec = sender.Receive(bytes);
                     
                     ////int bytesRec = 0;
