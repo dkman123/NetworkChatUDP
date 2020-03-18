@@ -627,11 +627,6 @@ namespace NetworkChatUDP
             txtMessage.Text = string.Format("rcon {0} suddendeath 1", txtRconPassword.Text);
         }
 
-        private void cmdStatus_Click(object sender, EventArgs e)
-        {
-            txtMessage.Text = string.Format("status");
-        }
-
         private void cmdNuke_Click(object sender, EventArgs e)
         {
             txtMessage.Text = string.Format("rcon {0} nuke {1}", txtRconPassword.Text, txtPlayerTarget.Text);
@@ -666,5 +661,11 @@ namespace NetworkChatUDP
         {
             txtMessage.Text = "playerlist";
         }
+
+        private void cmdGetStatus_Click(object sender, EventArgs e)
+        {
+            txtMessage.Text = string.Format("getstatus");
+        }
+
     }
 }
