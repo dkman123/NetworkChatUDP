@@ -118,8 +118,8 @@ namespace NetworkChatUDP
                 // Connect the socket to the remote endpoint. Catch any errors.
                 try
                 {
-                    sender.ReceiveTimeout = 30 * 1000;  // 30 secs
-                    sender.SendTimeout = 30 * 1000;  // 30 secs
+                    sender.ReceiveTimeout = 15 * 1000;  // 30 secs
+                    sender.SendTimeout = 15 * 1000;  // 30 secs
                     sender.Connect(remoteEP);
 
                     //Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
