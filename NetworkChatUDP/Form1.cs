@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.HashFunction;
+using System.Data.HashFunction.CityHash;
 using System.Drawing;
 using System.Linq;
 using System.Net;
@@ -27,6 +30,57 @@ namespace NetworkChatUDP
         {
             InitializeComponent();
         }
+
+        #region form functions
+
+        public void AddOutput(string str)
+        {
+            txtOutput.AppendText(str);
+            txtOutput.AppendText("\r\n");
+        }
+
+        private void NetworkChatUDP_Load(object sender, EventArgs e)
+        {
+            string ip = GetLocalIPAddress();
+            this.txtYourIP.Text = ip;
+
+            //ICityHashConfig cityHashConfig = new CityHashConfig();
+            //ICityHash cityHash = CityHashFactory.Instance.Create(cityHashConfig);
+            ICityHash cityHash = CityHashFactory.Instance.Create();
+            IHashValue hashValue32 = cityHash.ComputeHash(txtRconPassword.Text, 32);
+            // this gives us lowercase, which is what we want
+            txtHash.Text = hashValue32.AsHexString();
+        }
+
+        private void NetworkChatUDP_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState != FormWindowState.Minimized)
+            {
+                /// if it's wider than the base width (screen says 787, but resize says around 593)
+                if (this.Width > 600)
+                {
+                    /// current width - (starting form width - starting output width)
+                    txtOutput.Width = this.Width - (787 - 744);
+                }
+            }
+        }
+
+        private void cmdClear_Click(object sender, EventArgs e)
+        {
+            txtOutput.Text = string.Empty;
+        }
+
+        private void txtMessage_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.cmdSendWaitUE_Click(sender, e);
+            }
+        }
+
+        #endregion
+
+        #region network listen functions (unused)
 
         public void StartListening()
         {
@@ -100,88 +154,20 @@ namespace NetworkChatUDP
             //Console.Read();
         }
 
-        public void StartClient()
+        private void cmdStartListening_Click(object sender, EventArgs e)
         {
-            // Connect to a remote device.
-            try
-            {
-                // Establish the remote endpoint for the socket.
-                IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-                IPAddress ipAddress = IPAddress.Parse(this.txtServerIP.Text);
-                int port = Int32.Parse(this.txtServerPort.Text);
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
-
-                // Create a socket.
-                Socket sender = new Socket(AddressFamily.InterNetwork
-                    , SocketType.Dgram, ProtocolType.Udp);
-
-                // Connect the socket to the remote endpoint. Catch any errors.
-                try
-                {
-                    sender.ReceiveTimeout = 15 * 1000;  // 30 secs
-                    sender.SendTimeout = 15 * 1000;  // 30 secs
-                    sender.Connect(remoteEP);
-
-                    //Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
-                    this.AddOutput(string.Format("Client: Socket connected to {0}", sender.RemoteEndPoint.ToString()));
-
-                    // Encode the data string into a byte array.
-                    byte[] msg;
-                    if (cbxEnteredHex.Checked)
-                    {
-                        msg = StringToByteArray(this.txtMessage.Text);
-                    }
-                    else
-                    {
-                        msg = Encoding.ASCII.GetBytes(this.txtMessage.Text);
-                        // replace graves with 0xFF
-                        for (int idx=0; idx < msg.Length; idx++)
-                        {
-                            if ('`' == msg[idx]) msg[idx] = 0xFF;
-                        }
-                    }//else
-
-                    // Send the data through the socket.
-                    int bytesSent = sender.Send(msg);
-
-                    // try receiving on the same port
-                    byte[] bytes = new byte[1500];
-                    int bytesRec = sender.Receive(bytes);
-                    string data = null;
-                    data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                    
-                    //// Receive the response from the remote device.
-                    //Console.WriteLine("Echoed test = {0}", Encoding.ASCII.GetString(bytes, 0, bytesRec));
-                    this.AddOutput(string.Format("Client Received: {0}", data));
-                    this.AddOutput(string.Format("  Hex: {0}", this.ToHexString(bytes, " ")));
-
-                    // Release the socket.
-                    sender.Shutdown(SocketShutdown.Both);
-                    sender.Close();
-
-                }//try
-                catch (ArgumentNullException ane)
-                {
-                    //Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
-                    this.AddOutput(string.Format("ArgumentNullException: {0}", ane.ToString()));
-                }
-                catch (SocketException se)
-                {
-                    //Console.WriteLine("SocketException : {0}", se.ToString());
-                    this.AddOutput(string.Format("SocketException: {0}", se.ToString()));
-                }
-                catch (Exception ex)
-                {
-                    //Console.WriteLine("Unexpected exception : {0}", ex.ToString());
-                    this.AddOutput(string.Format("Unexpected exception: {0}", ex.ToString()));
-                }
-            }//try
-            catch (Exception e)
-            {
-                //Console.WriteLine(e.ToString());
-                this.AddOutput(string.Format("Error: {0}", e.ToString()));
-            }
+            StartListening();
         }
+
+        private void cmdStopListening_Click(object sender, EventArgs e)
+        {
+            this.running = false;
+            this.waiting = false;
+        }
+
+        #endregion
+
+        #region string functions
 
         public static byte[] StringToByteArray(string hex)
         {
@@ -194,60 +180,6 @@ namespace NetworkChatUDP
                              .Where(x => x % 2 == 0)
                              .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
                              .ToArray();
-        }
-
-        public void AddOutput(string str)
-        {
-            txtOutput.AppendText(str);
-            txtOutput.AppendText("\r\n");
-        }
-
-        public static string GetLocalIPAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip.ToString();
-                }
-            }
-            throw new Exception("No network adapters with an IPv4 address in the system!");
-        }
-
-        private void NetworkChatUDP_Load(object sender, EventArgs e)
-        {
-            string ip = GetLocalIPAddress();
-            this.txtYourIP.Text = ip;
-        }
-
-        private void cmdStartListening_Click(object sender, EventArgs e)
-        {
-            StartListening();
-        }
-        
-        private void cmdStopListening_Click(object sender, EventArgs e)
-        {
-            this.running = false;
-            this.waiting = false;
-        }
-
-        private void NetworkChatUDP_Resize(object sender, EventArgs e)
-        {
-            if (this.WindowState != FormWindowState.Minimized)
-            {
-                /// if it's wider than the base width (screen says 787, but resize says around 593)
-                if (this.Width > 600)
-                {
-                    /// current width - (starting form width - starting output width)
-                    txtOutput.Width = this.Width - (787 - 744);
-                }
-            }
-        }
-
-        private void cmdClear_Click(object sender, EventArgs e)
-        {
-            txtOutput.Text = string.Empty;
         }
 
         public string ToHexString(string input, string delimiter)
@@ -265,179 +197,26 @@ namespace NetworkChatUDP
             return hexString;
         }
 
-        private void cmdFillUrT_Click(object sender, EventArgs e)
-        {
-            txtServerIP.Text = "192.168.200.157";
-            txtServerPort.Text = "27960";
-            txtMessage.Text = "````getstatus";
-            cbxEnteredHex.Checked = false;
-        }
+        #endregion
 
-        private void cmdFillSG15Plyr_Click(object sender, EventArgs e)
-        {
-            txtServerIP.Text = "192.168.200.153";
-            txtServerPort.Text = "27015";
-            txtMessage.Text = "````U````";
-            cbxEnteredHex.Checked = false;
-        }
+        #region network send functions
 
-        private void cmdFillSG16Plyr_Click(object sender, EventArgs e)
+        public static string GetLocalIPAddress()
         {
-            txtServerIP.Text = "192.168.200.153";
-            txtServerPort.Text = "27016";
-            txtMessage.Text = "````U````";
-            cbxEnteredHex.Checked = false;
-        }
-
-        private void cmdSG15Info_Click(object sender, EventArgs e)
-        {
-            txtServerIP.Text = "192.168.200.153";
-            txtServerPort.Text = "27015";
-            txtMessage.Text = "````TSource Engine Query";
-            cbxEnteredHex.Checked = false;
-        }
-
-        private void cmdSG16Info_Click(object sender, EventArgs e)
-        {
-            txtServerIP.Text = "192.168.200.153";
-            txtServerPort.Text = "27016";
-            txtMessage.Text = "````TSource Engine Query";
-            cbxEnteredHex.Checked = false;
-        }
-
-        private void cmdUE4HS_Click(object sender, EventArgs e)
-        {
-            // UE4 Handshake
-            // initiate challenge
-            txtServerIP.Text = "192.168.200.153";
-            txtServerPort.Text = "7777";
-            txtMessage.Text = "01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 08";
-            cbxEnteredHex.Checked = true;
-        }
-
-        private void cmdUE4c_Click(object sender, EventArgs e)
-        {
-            txtServerIP.Text = "127.0.0.1";
-            txtServerPort.Text = "7070";
-            txtMessage.Text = "rcon testpass kick userTwo";
-            cbxEnteredHex.Checked = false;
-        }
-
-        private void cmdSendOnly_Click(object sender, EventArgs e)
-        {
-            StartClientNoWait();
-        }
-
-        private void cmdSendWait_Click(object sender, EventArgs e)
-        {
-            StartClient();
-        }
-
-        public void StartClientNoWait()
-        {
-            // Connect to a remote device.
-            try
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
             {
-                // Establish the remote endpoint for the socket.
-                // This example uses port 11000 on the local computer.
-                //IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());  //obsolete
-                IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-                //IPAddress ipAddress = ipHostInfo.AddressList[0];
-                //IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
-                //IPAddress ipAddress = IPAddress.Parse("127.0.0.1"); //ipHostInfo.AddressList[0];
-                IPAddress ipAddress = IPAddress.Parse(this.txtServerIP.Text);
-                int port = Int32.Parse(this.txtServerPort.Text);
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
-
-                // Create a socket.
-                Socket sender = new Socket(AddressFamily.InterNetwork
-                    , SocketType.Dgram, ProtocolType.Udp);
-
-                // Connect the socket to the remote endpoint. Catch any errors.
-                try
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    sender.ReceiveTimeout = 30 * 1000;  // 30 secs
-                    sender.ReceiveTimeout = 30 * 1000;  // 30 secs
-                    sender.ReceiveTimeout = 30 * 1000;  // 30 secs
-                    sender.SendTimeout = 30 * 1000;  // 30 secs
-                    sender.Connect(remoteEP);
-
-                    // ww will listen for a response on 1 port higher than we sent on
-                    //UdpClient listener = new UdpClient(((IPEndPoint)sender.LocalEndPoint).Port + 1, AddressFamily.InterNetwork);
-
-                    //Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
-                    this.AddOutput(string.Format("Client: Socket connected to {0}", sender.RemoteEndPoint.ToString()));
-
-                    // Encode the data string into a byte array.
-                    //byte[] msg = Encoding.ASCII.GetBytes(string.Format("{0}{1}", this.txtMessage.Text, "<EOF>"));
-                    byte[] msg;
-                    if (cbxEnteredHex.Checked)
-                    {
-                        msg = StringToByteArray(this.txtMessage.Text);
-                    }
-                    else
-                    {
-                        msg = Encoding.ASCII.GetBytes(this.txtMessage.Text);
-                        // replace graves with 0xFF
-                        for (int idx = 0; idx < msg.Length; idx++)
-                        {
-                            if ('`' == msg[idx]) msg[idx] = 0xFF;
-                        }
-                    }//else
-
-                    string msgText = null;
-                    msgText += Encoding.ASCII.GetString(msg, 0, msg.Length);
-                    //this.AddOutput(string.Format("Client sent msg {0}", msgText));
-
-                    // for some strange reason UE4 is receiving the string shifted one character to the right
-                    for (int idx2 = 0; idx2 < msg.Length; idx2++)
-                    {
-                        msg[idx2]--;
-                    }
-
-                    // Send the data through the socket.
-                    int bytesSent = sender.Send(msg);
-                    this.AddOutput(string.Format("Client sent msg {0}  ({1})", msgText, bytesSent));
-
-
-                    //// try receiving on the same port
-                    //byte[] bytes = new byte[1500];
-                    //int bytesRec = sender.Receive(bytes);
-                    //string data = null;
-                    //data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
-
-                    //// Receive the response from the remote device.
-                    ////int bytesRec = sender.Receive(bytes);
-                    ////Console.WriteLine("Echoed test = {0}", Encoding.ASCII.GetString(bytes, 0, bytesRec));
-                    //this.AddOutput(string.Format("Client Received: {0}", data));
-                    //this.AddOutput(string.Format("  Hex: {0}", this.ToHexString(bytes, " ")));
-
-                    // Release the socket.
-                    sender.Shutdown(SocketShutdown.Both);
-                    sender.Close();
-
-                }//try
-                catch (ArgumentNullException ane)
-                {
-                    //Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
-                    this.AddOutput(string.Format("ArgumentNullException: {0}", ane.ToString()));
+                    return ip.ToString();
                 }
-                catch (SocketException se)
-                {
-                    //Console.WriteLine("SocketException : {0}", se.ToString());
-                    this.AddOutput(string.Format("SocketException: {0}", se.ToString()));
-                }
-                catch (Exception ex)
-                {
-                    //Console.WriteLine("Unexpected exception : {0}", ex.ToString());
-                    this.AddOutput(string.Format("Unexpected exception: {0}", ex.ToString()));
-                }
-            }//try
-            catch (Exception e)
-            {
-                //Console.WriteLine(e.ToString());
-                this.AddOutput(string.Format("Error: {0}", e.ToString()));
             }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
+        }
+
+        private void cmdSendWaitUE_Click(object sender, EventArgs e)
+        {
+            this.StartClientWaitUE();
         }
 
         public void StartClientWaitUE()
@@ -564,97 +343,190 @@ namespace NetworkChatUDP
             }
         }
 
-        private void cmdSendWaitUE_Click(object sender, EventArgs e)
+        #endregion
+
+        #region UrT 4.x
+
+        private void cmdFillUrT_Click(object sender, EventArgs e)
         {
-            this.StartClientWaitUE();
+            txtServerIP.Text = "192.168.200.157";
+            txtServerPort.Text = "27960";
+            txtMessage.Text = "````getstatus";
+            cbxEnteredHex.Checked = false;
         }
 
-        private void txtMessage_KeyUp(object sender, KeyEventArgs e)
+        private void cmdSendWait_Click(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            StartClient();
+        }
+
+        public void StartClient()
+        {
+            // Connect to a remote device.
+            try
             {
-                this.cmdSendWaitUE_Click(sender, e);
+                // Establish the remote endpoint for the socket.
+                IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+                IPAddress ipAddress = IPAddress.Parse(this.txtServerIP.Text);
+                int port = Int32.Parse(this.txtServerPort.Text);
+                IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
+
+                // Create a socket.
+                Socket sender = new Socket(AddressFamily.InterNetwork
+                    , SocketType.Dgram, ProtocolType.Udp);
+
+                // Connect the socket to the remote endpoint. Catch any errors.
+                // Connect the socket to the remote endpoint. Catch any errors.
+                // Connect the socket to the remote endpoint. Catch any errors.
+                try
+                {
+                    sender.ReceiveTimeout = 15 * 1000;  // 30 secs
+                    sender.SendTimeout = 15 * 1000;  // 30 secs
+                    sender.Connect(remoteEP);
+
+                    //Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+                    this.AddOutput(string.Format("Client: Socket connected to {0}", sender.RemoteEndPoint.ToString()));
+
+                    // Encode the data string into a byte array.
+                    byte[] msg;
+                    if (cbxEnteredHex.Checked)
+                    {
+                        msg = StringToByteArray(this.txtMessage.Text);
+                    }
+                    else
+                    {
+                        msg = Encoding.ASCII.GetBytes(this.txtMessage.Text);
+                        // replace graves with 0xFF
+                        for (int idx = 0; idx < msg.Length; idx++)
+                        {
+                            if ('`' == msg[idx]) msg[idx] = 0xFF;
+                        }
+                    }//else
+
+                    // Send the data through the socket.
+                    int bytesSent = sender.Send(msg);
+
+                    // try receiving on the same port
+                    byte[] bytes = new byte[1500];
+                    int bytesRec = sender.Receive(bytes);
+                    string data = null;
+                    data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
+
+                    //// Receive the response from the remote device.
+                    //Console.WriteLine("Echoed test = {0}", Encoding.ASCII.GetString(bytes, 0, bytesRec));
+                    this.AddOutput(string.Format("Client Received: {0}", data));
+                    this.AddOutput(string.Format("  Hex: {0}", this.ToHexString(bytes, " ")));
+
+                    // Release the socket.
+                    sender.Shutdown(SocketShutdown.Both);
+                    sender.Close();
+
+                }//try
+                catch (ArgumentNullException ane)
+                {
+                    //Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+                    this.AddOutput(string.Format("ArgumentNullException: {0}", ane.ToString()));
+                }
+                catch (SocketException se)
+                {
+                    //Console.WriteLine("SocketException : {0}", se.ToString());
+                    this.AddOutput(string.Format("SocketException: {0}", se.ToString()));
+                }
+                catch (Exception ex)
+                {
+                    //Console.WriteLine("Unexpected exception : {0}", ex.ToString());
+                    this.AddOutput(string.Format("Unexpected exception: {0}", ex.ToString()));
+                }
+            }//try
+            catch (Exception e)
+            {
+                //Console.WriteLine(e.ToString());
+                this.AddOutput(string.Format("Error: {0}", e.ToString()));
             }
         }
 
+        #endregion
+
+        #region Action Buttons
+
         private void cmdKick_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} kick {1}", txtRconPassword.Text, txtPlayerTarget.Text);
+            txtMessage.Text = string.Format("rcon {0} kick {1}", txtHash.Text, txtPlayerTarget.Text);
         }
 
         private void cmdMap_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} map turnpike", txtRconPassword.Text);
+            txtMessage.Text = string.Format("rcon {0} map turnpike", txtHash.Text);
         }
 
         private void cmdReload_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} reload", txtRconPassword.Text);
+            txtMessage.Text = string.Format("rcon {0} reload", txtHash.Text);
         }
 
         private void cmdSlap_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} slap {1} 2", txtRconPassword.Text, txtPlayerTarget.Text);
+            txtMessage.Text = string.Format("rcon {0} slap {1} 2", txtHash.Text, txtPlayerTarget.Text);
         }
 
         private void cmdFriendlyFire_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} friendlyfire 0", txtRconPassword.Text);
+            txtMessage.Text = string.Format("rcon {0} friendlyfire 0", txtHash.Text);
         }
 
         private void cmdTimelimit_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} timelimit 22", txtRconPassword.Text);
+            txtMessage.Text = string.Format("rcon {0} timelimit 22", txtHash.Text);
         }
 
         private void cmdSwapteams_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} swapteams", txtRconPassword.Text);
+            txtMessage.Text = string.Format("rcon {0} swapteams", txtHash.Text);
         }
 
         private void cmdWaverespawn_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} waverespawn 1", txtRconPassword.Text);
+            txtMessage.Text = string.Format("rcon {0} waverespawn 1", txtHash.Text);
         }
 
         private void cmdGravity_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} gravity 500", txtRconPassword.Text);
+            txtMessage.Text = string.Format("rcon {0} gravity 500", txtHash.Text);
         }
 
         private void cmdSuddenDeath_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} suddendeath 1", txtRconPassword.Text);
+            txtMessage.Text = string.Format("rcon {0} suddendeath 1", txtHash.Text);
         }
 
         private void cmdNuke_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} nuke {1}", txtRconPassword.Text, txtPlayerTarget.Text);
+            txtMessage.Text = string.Format("rcon {0} nuke {1}", txtHash.Text, txtPlayerTarget.Text);
         }
 
         private void cmdMute_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} mute {1} 60", txtRconPassword.Text, txtPlayerTarget.Text);
+            txtMessage.Text = string.Format("rcon {0} mute {1} 60", txtHash.Text, txtPlayerTarget.Text);
         }
 
         private void cmdBan_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} ban {1}", txtRconPassword.Text, txtPlayerTarget.Text);
+            txtMessage.Text = string.Format("rcon {0} ban {1}", txtHash.Text, txtPlayerTarget.Text);
         }
 
         private void cmdTempban_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} tempban {1} 20m", txtRconPassword.Text, txtPlayerTarget.Text);
+            txtMessage.Text = string.Format("rcon {0} tempban {1} 20m", txtHash.Text, txtPlayerTarget.Text);
         }
 
         private void cmdUnban_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} unban {1}", txtRconPassword.Text, txtPlayerTarget.Text);
+            txtMessage.Text = string.Format("rcon {0} unban {1}", txtHash.Text, txtPlayerTarget.Text);
         }
 
         private void cmdSmite_Click(object sender, EventArgs e)
         {
-            txtMessage.Text = string.Format("rcon {0} smite {1}", txtRconPassword.Text, txtPlayerTarget.Text);
+            txtMessage.Text = string.Format("rcon {0} smite {1}", txtHash.Text, txtPlayerTarget.Text);
         }
 
         private void cmdPlayerList_Click(object sender, EventArgs e)
@@ -666,6 +538,8 @@ namespace NetworkChatUDP
         {
             txtMessage.Text = string.Format("getstatus");
         }
+
+        #endregion
 
     }
 }

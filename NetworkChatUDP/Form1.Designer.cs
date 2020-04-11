@@ -70,6 +70,8 @@
             this.txtListeningPort = new System.Windows.Forms.TextBox();
             this.cmdPlayerList = new System.Windows.Forms.Button();
             this.cmdSendWait = new System.Windows.Forms.Button();
+            this.lblHash = new System.Windows.Forms.Label();
+            this.txtHash = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtYourIP
@@ -524,11 +526,30 @@
             this.cmdSendWait.UseVisualStyleBackColor = true;
             this.cmdSendWait.Click += new System.EventHandler(this.cmdSendWait_Click);
             // 
+            // lblHash
+            // 
+            this.lblHash.AutoSize = true;
+            this.lblHash.Location = new System.Drawing.Point(81, 891);
+            this.lblHash.Name = "lblHash";
+            this.lblHash.Size = new System.Drawing.Size(62, 20);
+            this.lblHash.TabIndex = 67;
+            this.lblHash.Text = "<hash>";
+            // 
+            // txtHash
+            // 
+            this.txtHash.Location = new System.Drawing.Point(160, 888);
+            this.txtHash.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.txtHash.Name = "txtHash";
+            this.txtHash.Size = new System.Drawing.Size(405, 26);
+            this.txtHash.TabIndex = 68;
+            // 
             // NetworkChatUDP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(866, 1011);
+            this.Controls.Add(this.txtHash);
+            this.Controls.Add(this.lblHash);
             this.Controls.Add(this.cmdSendWait);
             this.Controls.Add(this.cmdPlayerList);
             this.Controls.Add(this.label2);
@@ -625,6 +646,8 @@
         private System.Windows.Forms.TextBox txtListeningPort;
         private System.Windows.Forms.Button cmdPlayerList;
         private System.Windows.Forms.Button cmdSendWait;
+        private System.Windows.Forms.Label lblHash;
+        private System.Windows.Forms.TextBox txtHash;
     }
 }
 
