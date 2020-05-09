@@ -343,6 +343,135 @@ namespace NetworkChatUDP
             }
         }
 
+        private void cmdTCPSendUE_Click(object sender, EventArgs e)
+        {
+            this.StartTCPClientWaitUE();
+        }
+
+        public void StartTCPClientWaitUE()
+        {
+            // Connect to a remote device.
+            try
+            {
+                // Establish the remote endpoint for the socket.
+                IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+                IPAddress ipAddress = IPAddress.Parse(this.txtServerIP.Text);
+                int port = Int32.Parse(this.txtServerPort.Text);
+                IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
+
+                // Create a socket.
+                Socket sender = new Socket(AddressFamily.InterNetwork
+                    , SocketType.Stream, ProtocolType.Tcp);
+
+                // Connect the socket to the remote endpoint. Catch any errors.
+                try
+                {
+                    sender.ReceiveTimeout = 15 * 1000;  // in milliseconds
+                    sender.SendTimeout = 15 * 1000;  // in milliseconds
+                    sender.Connect(remoteEP);
+
+                    //Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+                    this.AddOutput(string.Format("Client: Socket connected to {0}", sender.RemoteEndPoint.ToString()));
+
+                    // Encode the data string into a byte array.
+                    byte[] msg;
+                    if (cbxEnteredHex.Checked)
+                    {
+                        msg = StringToByteArray(this.txtMessage.Text);
+                    }
+                    else
+                    {
+                        msg = Encoding.ASCII.GetBytes(this.txtMessage.Text);
+                        // replace graves with 0xFF
+                        for (int idx = 0; idx < msg.Length; idx++)
+                        {
+                            if ('`' == msg[idx]) msg[idx] = 0xFF;
+                        }
+                    }//else
+
+                    string msgText = null;
+                    msgText += Encoding.ASCII.GetString(msg, 0, msg.Length);
+                    //this.AddOutput(string.Format("Client sent msg {0}", msgText));
+
+                    // for some strange reason UE4 is receiving the string shifted one character to the right
+                    for (int idx2 = 0; idx2 < msg.Length; idx2++)
+                    {
+                        msg[idx2]--;
+                    }
+
+                    // Send the data through the socket.
+                    int bytesSent = sender.Send(msg);
+                    this.AddOutput(string.Format("Client sent msg {0}  ({1})", msgText, bytesSent));
+
+                    //this.Refresh();
+                    this.txtOutput.Refresh();
+
+                    //// try receiving on the same port
+                    byte[] bytes = new byte[1500];
+                    /// stalls everything if a response isn't received
+                    int bytesRec = sender.Receive(bytes);
+
+                    ////int bytesRec = 0;
+                    ////SocketAsyncEventArgs socketArgs = new SocketAsyncEventArgs();
+                    ////socketArgs.SetBuffer(bytes, 0, bytes.Length);
+                    ////socketArgs.RemoteEndPoint = new IPEndPoint(
+                    ////    sender.AddressFamily == AddressFamily.InterNetwork ? IPAddress.Any : IPAddress.IPv6Any, 0);
+                    ////this.waiting = true;
+                    ////while (!sender.ReceiveFromAsync(socketArgs) && this.waiting)
+                    ////{
+                    ////    if (socketArgs.SocketError == SocketError.Success)
+                    ////    {
+                    ////        bytesRec = socketArgs.BytesTransferred;
+                    ////        this.waiting = false;
+                    ////    }
+                    ////}//while
+
+                    // for some strange reason UE4 is sending the string shifted one character to the left
+                    for (int idx2 = 0; idx2 < bytes.Length; idx2++)
+                    {
+                        bytes[idx2]++;
+                    }
+
+                    if (bytesRec != 0)
+                    {
+                        string data = null;
+                        data += Encoding.ASCII.GetString(bytes, 0, bytesRec);
+
+                        // Receive the response from the remote device.
+                        //int bytesRec = sender.Receive(bytes);
+                        //Console.WriteLine("Echoed test = {0}", Encoding.ASCII.GetString(bytes, 0, bytesRec));
+                        this.AddOutput(string.Format("Client Received: {0} ({1})", data, data.Length));
+                        //this.AddOutput(string.Format("  Hex: {0}", this.ToHexString(bytes, " ")));
+                    }//if
+
+                    // Release the socket.
+                    sender.Shutdown(SocketShutdown.Both);
+                    sender.Close();
+
+                }//try
+                catch (ArgumentNullException ane)
+                {
+                    //Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+                    this.AddOutput(string.Format("ArgumentNullException: {0}", ane.ToString()));
+                }
+                catch (SocketException se)
+                {
+                    //Console.WriteLine("SocketException : {0}", se.ToString());
+                    this.AddOutput(string.Format("SocketException: {0}", se.ToString()));
+                }
+                catch (Exception ex)
+                {
+                    //Console.WriteLine("Unexpected exception : {0}", ex.ToString());
+                    this.AddOutput(string.Format("Unexpected exception: {0}", ex.ToString()));
+                }
+            }//try
+            catch (Exception e)
+            {
+                //Console.WriteLine(e.ToString());
+                this.AddOutput(string.Format("Error: {0}", e.ToString()));
+            }
+        }
+
         #endregion
 
         #region UrT 4.x

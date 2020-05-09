@@ -72,6 +72,7 @@
             this.cmdSendWait = new System.Windows.Forms.Button();
             this.lblHash = new System.Windows.Forms.Label();
             this.txtHash = new System.Windows.Forms.TextBox();
+            this.cmdTCPSendUE = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtYourIP
@@ -124,7 +125,7 @@
             this.txtMessage.Location = new System.Drawing.Point(94, 655);
             this.txtMessage.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(650, 26);
+            this.txtMessage.Size = new System.Drawing.Size(548, 26);
             this.txtMessage.TabIndex = 7;
             this.txtMessage.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtMessage_KeyUp);
             // 
@@ -206,7 +207,7 @@
             this.cmdSendWaitUE.Name = "cmdSendWaitUE";
             this.cmdSendWaitUE.Size = new System.Drawing.Size(98, 52);
             this.cmdSendWaitUE.TabIndex = 36;
-            this.cmdSendWaitUE.Text = "Send && Wait UE";
+            this.cmdSendWaitUE.Text = "UDP Send && Wait UE";
             this.cmdSendWaitUE.UseVisualStyleBackColor = true;
             this.cmdSendWaitUE.Click += new System.EventHandler(this.cmdSendWaitUE_Click);
             // 
@@ -543,11 +544,23 @@
             this.txtHash.Size = new System.Drawing.Size(405, 26);
             this.txtHash.TabIndex = 68;
             // 
+            // cmdTCPSendUE
+            // 
+            this.cmdTCPSendUE.Location = new System.Drawing.Point(648, 643);
+            this.cmdTCPSendUE.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.cmdTCPSendUE.Name = "cmdTCPSendUE";
+            this.cmdTCPSendUE.Size = new System.Drawing.Size(98, 52);
+            this.cmdTCPSendUE.TabIndex = 69;
+            this.cmdTCPSendUE.Text = "TCP Send && Wait UE";
+            this.cmdTCPSendUE.UseVisualStyleBackColor = true;
+            this.cmdTCPSendUE.Click += new System.EventHandler(this.cmdTCPSendUE_Click);
+            // 
             // NetworkChatUDP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(866, 1011);
+            this.Controls.Add(this.cmdTCPSendUE);
             this.Controls.Add(this.txtHash);
             this.Controls.Add(this.lblHash);
             this.Controls.Add(this.cmdSendWait);
@@ -648,6 +661,7 @@
         private System.Windows.Forms.Button cmdSendWait;
         private System.Windows.Forms.Label lblHash;
         private System.Windows.Forms.TextBox txtHash;
+        private System.Windows.Forms.Button cmdTCPSendUE;
     }
 }
 
